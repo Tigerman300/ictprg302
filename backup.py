@@ -2,6 +2,7 @@
 """
 Author: Tyler Woods
 Program version 1
+copyright under MIT license
 --------------------------------------------------------------
 
 This backup program is used to locate and back up files manually
@@ -73,21 +74,21 @@ def main():
             for srcpath in jobs[jobname]:
                 if not os.path.exists(srcpath): #searches for tthe source of the file or directory named in backupcfg.py
                     error(f"ERROR: source path {srcpath} does not exist", dateTimeStamp)
-            else:
-                if not os.path.exists(dstpath):
-                    error(f"ERROR: Destination path {dstpath} does not exist", dateTimeStamp)
                 else:
-                    srcdetails = pathlib.PurePath(srcpath) #runs in the background to pick apart the source file/directory to be able to recreate it.
-                    
-                    dstLoc = dstpath + "/" + srcdetails.name + "-" + dateTimeStamp #creates a file backup with date and time stamp
-
-                    if pathlib.Path(srcpath).is_dir():          #copies directory and files
-                        shutil.copytree(srcpath, dstLoc)
-                        success(f'SUCCESS: of back up ', dateTimeStamp)
+                    if not os.path.exists(dstpath):
+                        error(f"ERROR: Destination path {dstpath} does not exist", dateTimeStamp)
                     else:
-                        shutil.copy2(srcpath, dstLoc)           #copies the file
-                        success(f'SUCCESS: of back up ', dateTimeStamp)
-                        #write SUCCSESS to log file
+                        srcdetails = pathlib.PurePath(srcpath) #runs in the background to pick apart the source file/directory to be able to recreate it.
+                        
+                        dstLoc = dstpath + "/" + srcdetails.name + "-" + dateTimeStamp #creates a file backup with date and time stamp
+    
+                        if pathlib.Path(srcpath).is_dir():          #copies directory and files
+                            shutil.copytree(srcpath, dstLoc)
+                            success(f'SUCCESS: of back up of directory', dateTimeStamp)
+                        else:
+                            shutil.copy2(srcpath, dstLoc)           #copies the file
+                            success(f'SUCCESS: of back up of file', dateTimeStamp)
+                            #write SUCCSESS to log file
                     
 if __name__ == "__main__":
     main()

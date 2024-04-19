@@ -1,5 +1,6 @@
 jobs = {'job17':['/home/ec2-user/environment/ictprg302/file1.dat'],
-        'job18':['/home/ec2-user/environment/ictprg302/dir1']}
+        'job18':['/home/ec2-user/environment/ictprg302/dir1'],
+        'job72':["/home/ec2-user/environment/ictprg302/file4.dat", "/home/ec2-user/environment/ictprg302/file5.dat", "/home/ec2-user/environment/ictprg302/file6.dat"]}
         
 dstpath = '/home/ec2-user/environment/ictprg302/backups'
 
