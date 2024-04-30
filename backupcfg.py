@@ -10,6 +10,6 @@ smtp = {"sender": "ultamate300@hotmail.com", # elasticemail.com verified sender
         "server": "smtp.elasticemail.com", # elasticemail.com SMTP server
         "port": 2525, # elasticemail.com SMTP port
         "user": "ultamate300@hotmail.com", # elasticemail.com user
-        "password": ""} # elasticemail.com password
+        "password": "A1C902FA35EE86382BEADAC14E0FCABCAB19"} # elasticemail.com password
         
 logpath = '/home/ec2-user/environment/ictprg302/backup.log'

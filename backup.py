@@ -71,7 +71,7 @@ def main():
         if jobname not in jobs:
             error(f"ERROR: jobname {jobname} not defined", dateTimeStamp)
         else:
-            for srcpath in jobs[jobname]:
+            for srcpath in jobs[jobname]: # allows the program to be looped in a job
                 if not os.path.exists(srcpath): #searches for tthe source of the file or directory named in backupcfg.py
                     error(f"ERROR: source path {srcpath} does not exist", dateTimeStamp)
                 else:
@@ -84,10 +84,10 @@ def main():
     
                         if pathlib.Path(srcpath).is_dir():          #copies directory and files
                             shutil.copytree(srcpath, dstLoc)
-                            success(f'SUCCESS: of back up of directory', dateTimeStamp)
+                            success(f'SUCCESS: of back up of directory {jobname}', dateTimeStamp)
                         else:
                             shutil.copy2(srcpath, dstLoc)           #copies the file
-                            success(f'SUCCESS: of back up of file', dateTimeStamp)
+                            success(f'SUCCESS: of back up of file {jobname}', dateTimeStamp)
                             #write SUCCSESS to log file
                     
 if __name__ == "__main__":
