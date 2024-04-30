@@ -11,7 +11,7 @@ further development of this should be able to be ran automatically.
 """
 #imports to help implement the written code
 import sys #added for function and to help run the code
-import os #
+import os # imported to help with some user defined functions
 import pathlib #opens up a path library
 import shutil #allows the ability to copy and create files
 import smtplib #imports the library to allow emails
@@ -20,6 +20,11 @@ from backupcfg import jobs, dstpath, smtp, logpath #used as reference points and
 
 
 def logging(message, dateTimeStamp):
+    """
+    This funtion is used to create a log file and note
+    weather the job was ran was succesful or if it was to fail
+    why it had failed as well
+    """
     try:
         file = open(logpath, "a")
         file.write(f"{message} {dateTimeStamp}.\n")
@@ -55,10 +60,10 @@ def error(errormessage, dateTimeStamp):
     logging(f'FAILURE {errormessage}', dateTimeStamp)
     sendEmail(errormessage, dateTimeStamp)
    # sendEmail(errormessage, dateTimeStamp) #email FAILURE to email
-    
+    #this helps the log funtion if it is an error message
 def success(message, dateTimeStamp):
     logging(message, dateTimeStamp)
-
+    # for the logging funtion when it is succsessful 
 
 def main():
     dateTimeStamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -68,7 +73,7 @@ def main():
         error(f"ERROR: jobname missing from command line", dateTimeStamp)
     else:
         jobname = sys.argv[1]
-        if jobname not in jobs:
+        if jobname not in jobs: #checking the job given against the job list provided in backupcfg.py
             error(f"ERROR: jobname {jobname} not defined", dateTimeStamp)
         else:
             for srcpath in jobs[jobname]: # allows the program to be looped in a job
@@ -76,7 +81,7 @@ def main():
                     error(f"ERROR: source path {srcpath} does not exist", dateTimeStamp)
                 else:
                     if not os.path.exists(dstpath):
-                        error(f"ERROR: Destination path {dstpath} does not exist", dateTimeStamp)
+                        error(f"ERROR: Destination path {dstpath} does not exist", dateTimeStamp) #this if statement is checking for the destination of the backups to be saved too
                     else:
                         srcdetails = pathlib.PurePath(srcpath) #runs in the background to pick apart the source file/directory to be able to recreate it.
                         
