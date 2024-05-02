@@ -11,7 +11,7 @@ further development of this should be able to be ran automatically.
 """
 #imports to help implement the written code
 import sys #added for function and to help run the code
-import os # imported to help with some user defined functions
+import os # imported to help with files and other directories
 import pathlib #opens up a path library
 import shutil #allows the ability to copy and create files
 import smtplib #imports the library to allow emails
@@ -30,9 +30,9 @@ def logging(message, dateTimeStamp):
         file.write(f"{message} {dateTimeStamp}.\n")
         file.close()
     except FileNotFoundError:
-        print("ERROR: File does not exist.")
+        print("ERROR: File does not exist.") #error if the log file doesn't exist
     except IOError:
-        print("ERROR: File is not accessible.")
+        print("ERROR: File is not accessible.") #error if the file cannot be accessed by the program
 
 def sendEmail(errormessage, dateTimeStamp):
     """ 
@@ -53,17 +53,22 @@ def sendEmail(errormessage, dateTimeStamp):
         smtp_server.sendmail(smtp["sender"], smtp["recipient"], email)
         smtp_server.close()
     except Exception as e:
-        print("ERROR: Send email failed: " + str(e), file=sys.stderr)
+        print("ERROR: Send email failed: " + str(e), file=sys.stderr) # Creates an error message if the email service doesn't work
+
 
 def error(errormessage, dateTimeStamp):
+    """
+      sendEmail(errormessage, dateTimeStamp) #email FAILURE to email
+      this helps the log funtion if it is an error message
+    """
     print(f'FAILURE {errormessage}')
     logging(f'FAILURE {errormessage}', dateTimeStamp)
     sendEmail(errormessage, dateTimeStamp)
-   # sendEmail(errormessage, dateTimeStamp) #email FAILURE to email
-    #this helps the log funtion if it is an error message
-def success(message, dateTimeStamp):
+  
+    
+def success(message, dateTimeStamp):  # for the logging funtion when it is succsessful 
     logging(message, dateTimeStamp)
-    # for the logging funtion when it is succsessful 
+   
 
 def main():
     dateTimeStamp = datetime.now().strftime("%Y%m%d-%H%M%S")
